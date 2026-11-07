@@ -1,0 +1,9 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.hxshijie.betterBrackets">
+        <braceSupport implementation="com.hxshijie.betterBrackets.support.vue.VueBraceSupport"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.vue.VueIndentGuidePassFactory"/>
+    </extensions>
+</idea-plugin>

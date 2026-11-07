@@ -1,0 +1,9 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.hxshijie.betterBrackets">
+        <braceSupport implementation="com.hxshijie.betterBrackets.support.kotlin.KotlinBraceSupport"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.kotlin.KotlinIndentGuidePassFactory"/>
+    </extensions>
+</idea-plugin>
