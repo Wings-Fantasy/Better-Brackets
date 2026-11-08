@@ -15,6 +15,7 @@ on:
   push:
     branches: [ master ]
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -36,6 +37,18 @@ jobs:
           dotnet: true
           haskell: true
           large-packages: true
+          docker-images: true
+          preinstalled-runtimes: true
+          swap-storage: false
+
+      # 深度清盘脚本：把虚拟机里残留的 Swift、Boost 和 Docker 彻底物理抹除
+      - name: Deep Purge Unused Toolchains
+        run: |
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/local/lib/node_modules
+          sudo rm -rf /var/lib/docker
+          df -h /
 
       # Check out the current repository
       - name: Fetch Sources
@@ -78,6 +91,18 @@ jobs:
           dotnet: true
           haskell: true
           large-packages: true
+          docker-images: true
+          preinstalled-runtimes: true
+          swap-storage: false
+
+      # 深度清盘脚本：把虚拟机里残留的 Swift、Boost 和 Docker 彻底物理抹除
+      - name: Deep Purge Unused Toolchains
+        run: |
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/local/lib/node_modules
+          sudo rm -rf /var/lib/docker
+          df -h /
 
       # Check out the current repository
       - name: Fetch Sources
@@ -123,6 +148,18 @@ jobs:
           dotnet: true
           haskell: true
           large-packages: true
+          docker-images: true
+          preinstalled-runtimes: true
+          swap-storage: false
+
+      # 深度清盘脚本：把虚拟机里残留的 Swift、Boost 和 Docker 彻底物理抹除
+      - name: Deep Purge Unused Toolchains
+        run: |
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/local/lib/node_modules
+          sudo rm -rf /var/lib/docker
+          df -h /
 
       # Check out the current repository
       - name: Fetch Sources

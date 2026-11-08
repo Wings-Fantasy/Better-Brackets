@@ -33,7 +33,7 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            recommended()
+            latest()
 
             select {
                 types = listOf(IntelliJPlatformType.IntellijIdeaUltimate)
