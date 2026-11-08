@@ -474,6 +474,52 @@ class BetterBracketsFunctionConfigurable : Configurable {
                         }
                     }
                 }
+            },
+
+            LanguageConfigItem(
+                id = "JSON",
+                displayName = "JSON",
+                masterProp = settings::isJsonEnabled
+            ) { state, live, onChanged ->
+                panel {
+                    group(BetterBracketsBundle.message("settings.function.group.bracket-rendering")) {
+                        row {
+                            checkBox(BetterBracketsBundle.message("settings.function.json.square"))
+                                .bindSelected(state::isJsonSquareEnabled)
+                                .onChanged { cb ->
+                                    live.isJsonSquareEnabled = cb.isSelected
+                                    onChanged()
+                                }
+                        }
+                        row {
+                            checkBox(BetterBracketsBundle.message("settings.function.json.curly"))
+                                .bindSelected(state::isJsonCurlyEnabled)
+                                .onChanged { cb ->
+                                    live.isJsonCurlyEnabled = cb.isSelected
+                                    onChanged()
+                                }
+                        }
+                    }.topGap(TopGap.NONE)
+                    group(BetterBracketsBundle.message("settings.function.group.visual-aids")) {
+                        row {
+                            checkBox(BetterBracketsBundle.message("settings.function.global.indent-guide"))
+                                .bindSelected(state::isJsonIndentGuideEnabled)
+                                .onChanged { cb ->
+                                    live.isJsonIndentGuideEnabled = cb.isSelected
+                                    onChanged()
+                                }
+                        }
+                        row {
+                            checkBox(BetterBracketsBundle.message("settings.function.global.scope"))
+                                .bindSelected(state::isJsonScopeEnabled)
+                                .comment(BetterBracketsBundle.message("settings.function.global.scope-comment"))
+                                .onChanged { cb ->
+                                    live.isJsonScopeEnabled = cb.isSelected
+                                    onChanged()
+                                }
+                        }
+                    }
+                }
             }
         ).filter { BracePairProvider.isLanguageSupported(it.id) }
     }
@@ -519,6 +565,7 @@ class BetterBracketsFunctionConfigurable : Configurable {
                 "CSS" -> workingState.isCssEnabled = value
                 "VUE" -> workingState.isVueEnabled = value
                 "YAML" -> workingState.isYamlEnabled = value
+                "JSON" -> workingState.isJsonEnabled = value
             }
             rightSubPanels[item.id]?.let { setSubPanelEnabled(it, value) }
             previewEditors[item.id]?.refreshHighlighting()

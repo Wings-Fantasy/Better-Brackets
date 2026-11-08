@@ -19,6 +19,7 @@ dependencies {
         bundledPlugin("com.intellij.css")
         bundledPlugin("org.jetbrains.plugins.vue")
         bundledPlugin("org.jetbrains.plugins.yaml")
+        bundledPlugin("com.intellij.modules.json")
         testFramework(TestFrameworkType.Platform)
         testBundledPlugins("com.intellij.modules.ultimate")
     }

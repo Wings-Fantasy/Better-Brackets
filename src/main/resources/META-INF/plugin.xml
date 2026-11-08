@@ -28,6 +28,7 @@
             <li><b>CSS</b>：媒体查询、伪类、<code>calc</code>/<code>var</code> 函数、属性选择器与样式声明块。</li>
             <li><b>Vue (SFC)</b>：单文件组件跨区深度协同，支持 Mustache 双花括号插值 <code>{{ }}</code> 专属着色。</li>
             <li><b>YAML</b>：行内列表与端口映射 <code>[ ]</code>、行内对象与环境配置 <code>{ }</code> 专属着色，自适应层级垂直缩进线与作用域高亮。</li>
+            <li><b>JSON</b>：数组 <code>[ ]</code> 与对象 <code>{ }</code> 专属着色，自适应层级垂直缩进线与作用域高亮。</li>
         </ul>
 
         <h3>⚡ 轻量与高性能</h3>
@@ -36,6 +37,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
+    <depends>com.intellij.modules.json</depends>
 
     <!-- 可选语言依赖：使插件在不同 IDE（CLion、WebStorm、PyCharm、IDEA 等）中均可无缝兼容安装运行 -->
     <depends optional="true" config-file="betterBrackets-java.xml">com.intellij.java</depends>
@@ -52,11 +54,12 @@
                         dynamic="true"/>
     </extensionPoints>
 
-    <!-- 平台基础语言支持：C/C++ 与 HTML/XML 在所有 JetBrains IDE（包括 CLion、IDEA 等）中均原生可用 -->
+    <!-- 平台基础语言支持：C/C++、HTML/XML、YAML 与 JSON 在支持该模块的环境中可用 -->
     <extensions defaultExtensionNs="com.hxshijie.betterBrackets">
         <braceSupport implementation="com.hxshijie.betterBrackets.support.cpp.CppBraceSupport"/>
         <braceSupport implementation="com.hxshijie.betterBrackets.support.html.HtmlBraceSupport"/>
         <braceSupport implementation="com.hxshijie.betterBrackets.support.yaml.YamlBraceSupport"/>
+        <braceSupport implementation="com.hxshijie.betterBrackets.support.json.JsonBraceSupport"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -86,6 +89,7 @@
         <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.cpp.CppIndentGuidePassFactory"/>
         <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.html.HtmlIndentGuidePassFactory"/>
         <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.yaml.YamlIndentGuidePassFactory"/>
+        <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.json.JsonIndentGuidePassFactory"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.kotlin">

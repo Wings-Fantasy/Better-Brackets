@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+## 0.2.0
+### Added
+- **JSON 语言深度支持 (JSON Language Support)**
+  - 支持数组方括号 `[ ]` 与对象花括号 `{ }` 根据嵌套深度自适应循环着色。
+  - 基于 JetBrains 原生 AST/PSI 语法深度解析，精准区分代码结构，绝不误染 JSON 键名与字符串字面量。
+  - **自适应垂直缩进引导线 (Indent Guide)**：根据 JSON 对象与多维数组嵌套深度自适应渲染垂直缩进线。
+  - **当前作用域动态高亮 (Scope Highlighting)**：光标所及之处实时圈定当前所在 JSON 对象或数组层级起止边界。
+  - **全独立调色板与实时预览**：设置面板提供方括号与花括号独立调色板及开关配置，内嵌实时 JSON 代码预览。
+
 ## 0.1.0
 ### Added
 - **多层级括号色彩映射 (Nested Bracket Coloring)**
