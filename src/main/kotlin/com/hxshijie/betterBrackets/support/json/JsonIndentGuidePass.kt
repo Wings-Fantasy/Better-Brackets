@@ -48,11 +48,11 @@ class JsonIndentGuidePass(
     private var myResult: CollectResult? = null
 
     override fun doCollectInformation(progress: ProgressIndicator) {
-        val stamp = myEditor.getUserData(LAST_TIME_INDENTS_BUILT)
         val currentStamp = nowStamp(myEditor)
+        val stamp = myEditor.getUserData(LAST_TIME_INDENTS_BUILT)
         if (stamp != null && stamp == currentStamp) return
 
-        myResult = collectInformation(myEditor, psiFile, progress)
+        myResult = collectInformation(myEditor, psiFile, progress, getState(myEditor), currentStamp)
     }
 
     override fun doApplyInformationToEditor() {
@@ -74,7 +74,8 @@ class JsonIndentGuidePass(
     data class CollectResult(
         val descriptors: List<IndentGuideDescriptor>,
         val lineInfos: List<IndentLineInfo>,
-        val scopeInfos: List<ScopeInfo>
+        val scopeInfos: List<ScopeInfo>,
+        val stamp: Long = -1L
     )
 
     companion object {
@@ -114,13 +115,14 @@ class JsonIndentGuidePass(
             editor: EditorEx,
             psiFile: JsonFile,
             progress: ProgressIndicator? = null,
-            state: BetterBracketsState = getState(editor)
+            state: BetterBracketsState = getState(editor),
+            stamp: Long = nowStamp(editor)
         ): CollectResult {
             val isIndentEnabled = state.isJsonEnabled && state.isJsonIndentGuideEnabled
             val isScopeEnabled = state.isJsonEnabled && state.isJsonScopeEnabled
 
             if (!isIndentEnabled && !isScopeEnabled) {
-                return CollectResult(emptyList(), emptyList(), emptyList())
+                return CollectResult(emptyList(), emptyList(), emptyList(), stamp)
             }
 
             val curlyColors = state.jsonCurlyColors
@@ -230,7 +232,7 @@ class JsonIndentGuidePass(
             lineInfos.sortWith { a, b -> compareRanges(a.range, b.range) }
             descriptors.sortBy { it.startLine }
 
-            return CollectResult(descriptors, lineInfos, scopeInfos)
+            return CollectResult(descriptors, lineInfos, scopeInfos, stamp)
         }
 
         private fun findDeclarationLine(element: PsiElement, document: Document): Int {
@@ -255,11 +257,11 @@ class JsonIndentGuidePass(
             editor: EditorEx,
             result: CollectResult
         ) {
-            val stamp = editor.getUserData(LAST_TIME_INDENTS_BUILT)
             val currentStamp = nowStamp(editor)
+            val stamp = editor.getUserData(LAST_TIME_INDENTS_BUILT)
 
-            if (stamp == currentStamp) return
-            editor.putUserData(LAST_TIME_INDENTS_BUILT, currentStamp)
+            if (stamp == currentStamp && stamp == result.stamp) return
+            editor.putUserData(LAST_TIME_INDENTS_BUILT, result.stamp)
 
             val oldHighlighters = editor.getUserData(INDENT_HIGHLIGHTERS_KEY)
             if (currentStamp == -1L) {
@@ -419,7 +421,7 @@ class JsonIndentGuidePass(
             val lastRange = editor.getUserData(KEY_ACTIVE_SCOPE_RANGE)
             val newRange = activeScope?.range
 
-            if (newRange != lastRange) {
+            if (newRange != lastRange || oldHighlighter == null || !oldHighlighter.isValid) {
                 oldHighlighter?.dispose()
                 editor.putUserData(KEY_ACTIVE_SCOPE_RANGE, newRange)
 
@@ -436,6 +438,8 @@ class JsonIndentGuidePass(
                         HighlighterTargetArea.EXACT_RANGE
                     )
                     editor.putUserData(KEY_ACTIVE_SCOPE_HIGHLIGHTER, newHighlighter)
+                } else {
+                    editor.putUserData(KEY_ACTIVE_SCOPE_HIGHLIGHTER, null)
                 }
             }
         }

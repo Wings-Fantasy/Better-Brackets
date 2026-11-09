@@ -30,8 +30,8 @@ class VueIndentGuidePassFactory :
     ) {
         registrar.registerTextEditorHighlightingPass(
             this,
-            TextEditorHighlightingPassRegistrar.Anchor.LAST,
-            Pass.LAST_PASS,
+            TextEditorHighlightingPassRegistrar.Anchor.AFTER,
+            Pass.UPDATE_ALL,
             false,
             false
         )
