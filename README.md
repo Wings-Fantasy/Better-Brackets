@@ -6,10 +6,10 @@
 **让代码的层级结构一目了然 · 优雅、精准、轻量的 JetBrains 系列 IDE 多层级括号色彩与结构辅助插件**
 
 [![IntelliJ Platform](https://img.shields.io/badge/Platform-JetBrains%20IDEs-087CFA?style=flat-square&logo=jetbrains&logoColor=white)](https://plugins.jetbrains.com/)
+[![JetBrains Marketplace](https://img.shields.io/badge/Marketplace-Better%20Brackets-087CFA?style=flat-square&logo=jetbrains&logoColor=white)](https://plugins.jetbrains.com/plugin/35880-better-brackets)
 [![JDK Version](https://img.shields.io/badge/JDK-21%2B-007396?style=flat-square&logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Engine](https://img.shields.io/badge/Engine-IntelliJ%20PSI-FE2857?style=flat-square&logo=jetbrains&logoColor=white)](https://plugins.jetbrains.com/docs/intellij/psi.html)
 [![License](https://img.shields.io/github/license/Wings-Fantasy/Better-Brackets?style=flat-square&color=2b579a)](LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/Wings-Fantasy/Better-Brackets?style=flat-square&color=339933)](https://github.com/Wings-Fantasy/Better-Brackets/releases)
 
 [核心特性](#-核心特性) • [支持语言](#-支持语言) • [视觉辅助](#-视觉辅助) • [调色板与实时预览](#-调色板与实时预览) • [安装使用](#-安装使用) • [本地构建](#-本地开发与构建)
 
@@ -73,15 +73,23 @@
 
 ## 🚀 安装使用
 
-### 途径一：从 IDE 插件市场在线安装（推荐）
-1. 打开 IDE，进入菜单：`Settings` (Windows/Linux) 或 `Preferences` (macOS) > `Plugins`。
-2. 切换至 `Marketplace` 标签页，搜索 **`Better Brackets`** 或 **`更好的括号`**。
-3. 点击 `Install`，安装完成后即刻生效，无需重启。
+### 途径一：从 JetBrains 官方插件市场安装（推荐）
 
-### 途径二：离线安装包
-1. 在 [Releases 页面](https://github.com/Wings-Fantasy/Better-Brackets/releases) 下载最新的 `.zip` 插件包。
-2. 进入 `Plugins` > 点击齿轮图标 ⚙️ > 选择 **`Install Plugin from Disk...`**。
-3. 选择下载的 zip 文件载入即可。
+- **在 IDE 内直接安装**：
+  1. 打开 IDE，进入菜单：`Settings` (Windows/Linux) 或 `Preferences` (macOS) > `Plugins`。
+  2. 切换至 `Marketplace` 标签页，搜索 **`Better Brackets`** 或 **`更好的括号`**。
+  3. 点击 `Install`，安装完成后即刻生效，无需重启。
+- **通过网页端安装 / 查看**：
+  访问官方插件主页：👉 [JetBrains Marketplace - Better Brackets](https://plugins.jetbrains.com/plugin/35880-better-brackets)。
+
+### 途径二：体验最新构建版（GitHub Actions Artifacts，尝鲜/备用）
+
+如果您希望抢先体验尚未发布到 Marketplace 的最新开发特性，或处于网络受限环境：
+1. 访问本仓库的 [GitHub Actions](https://github.com/Wings-Fantasy/Better-Brackets/actions) 页面。
+2. 点击最近一次成功的 **Build** 工作流记录。
+3. 滑动至页面底部的 **Artifacts** 区域，点击下载 **`plugin-distribution`** 产物包并解压得到插件 `.zip`。
+4. 打开 IDE，进入 `Plugins` 界面，点击右上角齿轮图标 ⚙️ > 选择 **`Install Plugin from Disk...`**。
+5. 选中解压出来的 `.zip` 文件载入即可完成安装。
 
 ---
 
