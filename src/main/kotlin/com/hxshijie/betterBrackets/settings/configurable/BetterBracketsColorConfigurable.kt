@@ -186,6 +186,21 @@ class BetterBracketsColorConfigurable : Configurable {
                         }
                     }.topGap(TopGap.NONE)
                 }
+            },
+
+            LanguageConfigItem(
+                id = "JSON",
+                displayName = "JSON"
+            ) { state, onChanged ->
+                panel {
+                    group(BetterBracketsBundle.message("settings.color.group.color-palette")) {
+                        paletteHint(BetterBracketsBundle.message("settings.color.global.tip"))
+                        panel {
+                            paletteRow(BetterBracketsBundle.message("settings.color.global.square"), state::jsonSquareColors, onChanged)
+                            paletteRow(BetterBracketsBundle.message("settings.color.global.curly"), state::jsonCurlyColors, onChanged)
+                        }
+                    }.topGap(TopGap.NONE)
+                }
             }
         ).filter { BracePairProvider.isLanguageSupported(it.id) }
     }
@@ -426,6 +441,8 @@ class BetterBracketsColorConfigurable : Configurable {
                 "cssCurlyColors" -> targetState.cssCurlyColors = workingColors.toMutableList()
                 "yamlSquareColors" -> targetState.yamlSquareColors = workingColors.toMutableList()
                 "yamlCurlyColors" -> targetState.yamlCurlyColors = workingColors.toMutableList()
+                "jsonSquareColors" -> targetState.jsonSquareColors = workingColors.toMutableList()
+                "jsonCurlyColors" -> targetState.jsonCurlyColors = workingColors.toMutableList()
             }
         }
     }

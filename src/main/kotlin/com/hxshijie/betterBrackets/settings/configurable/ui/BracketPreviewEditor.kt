@@ -132,7 +132,7 @@ open class BracketPreviewEditor(
     }
 
     private fun findInitialCaretOffset(code: String): Int {
-        val markers = listOf("System.out", "grid[0][0]", "const config", "return items", "transform:", "<span>Better Brackets</span>", "{{ user.profile.name }}", "environment:")
+        val markers = listOf("System.out", "grid[0][0]", "const config", "return items", "transform:", "<span>Better Brackets</span>", "{{ user.profile.name }}", "environment:", "\"parameters\": {")
         for (marker in markers) {
             val idx = code.indexOf(marker)
             if (idx >= 0) return idx
@@ -298,6 +298,38 @@ open class BracketPreviewEditor(
                           - "./extensions:/home/node/app/public/scripts/extensions/third-party"
                         healthcheck: { test: ["CMD", "node", "src/healthcheck.js"], interval: 30s, timeout: 10s, start_period: 20s, retries: 3 }
                         restart: unless-stopped
+                """.trimIndent()
+            ),
+            "JSON" to LanguagePreviewDefinition(
+                extension = "json",
+                code = """
+                    [
+                      {
+                        "type": "function",
+                        "function": {
+                          "name": "schedule_meeting",
+                          "description": "创建日历日程并邀请参会人员",
+                          "parameters": {
+                            "type": "object",
+                            "properties": {
+                              "title": { "type": "string" },
+                              "attendees": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "email": { "type": "string" },
+                                    "role": { "type": "string", "enum": ["required", "optional"] }
+                                  },
+                                  "required": ["email", "role"]
+                                }
+                              }
+                            },
+                            "required": ["title", "attendees"]
+                          }
+                        }
+                      }
+                    ]
                 """.trimIndent()
             )
         )

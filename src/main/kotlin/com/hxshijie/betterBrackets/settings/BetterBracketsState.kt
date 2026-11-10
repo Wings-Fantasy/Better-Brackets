@@ -26,6 +26,7 @@ class BetterBracketsState : PersistentStateComponent<BetterBracketsState> {
     var isCssEnabled: Boolean = true
     var isVueEnabled: Boolean = true
     var isYamlEnabled: Boolean = true
+    var isJsonEnabled: Boolean = true
 
     // Java 子功能开关
     var isJavaRoundEnabled: Boolean = true
@@ -82,6 +83,12 @@ class BetterBracketsState : PersistentStateComponent<BetterBracketsState> {
     var isYamlIndentGuideEnabled: Boolean = true
     var isYamlScopeEnabled: Boolean = true
 
+    // Json 子功能开关
+    var isJsonSquareEnabled: Boolean = true
+    var isJsonCurlyEnabled: Boolean = true
+    var isJsonIndentGuideEnabled: Boolean = true
+    var isJsonScopeEnabled: Boolean = true
+
     // 调色板配置
     var javaRoundColors: MutableList<String> = defaultPalette()
     var javaSquareColors: MutableList<String> = defaultPalette()
@@ -113,6 +120,9 @@ class BetterBracketsState : PersistentStateComponent<BetterBracketsState> {
 
     var yamlSquareColors: MutableList<String> = defaultPalette()
     var yamlCurlyColors: MutableList<String> = defaultPalette()
+
+    var jsonSquareColors: MutableList<String> = defaultPalette()
+    var jsonCurlyColors: MutableList<String> = defaultPalette()
 
     private fun defaultPalette(): MutableList<String> = mutableListOf(
         "#56C701",
@@ -159,6 +169,9 @@ class BetterBracketsState : PersistentStateComponent<BetterBracketsState> {
 
         this.yamlSquareColors = other.yamlSquareColors.toMutableList()
         this.yamlCurlyColors = other.yamlCurlyColors.toMutableList()
+
+        this.jsonSquareColors = other.jsonSquareColors.toMutableList()
+        this.jsonCurlyColors = other.jsonCurlyColors.toMutableList()
     }
 
     override fun getState(): BetterBracketsState = this

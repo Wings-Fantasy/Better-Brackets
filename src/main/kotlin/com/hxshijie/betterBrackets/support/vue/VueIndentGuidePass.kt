@@ -54,11 +54,11 @@ class VueIndentGuidePass(
     private var myResult: CollectResult? = null
 
     override fun doCollectInformation(progress: ProgressIndicator) {
-        val stamp = myEditor.getUserData(LAST_TIME_INDENTS_BUILT)
         val currentStamp = nowStamp(myEditor)
+        val stamp = myEditor.getUserData(LAST_TIME_INDENTS_BUILT)
         if (stamp != null && stamp == currentStamp) return
 
-        myResult = collectInformation(myEditor, psiFile, progress)
+        myResult = collectInformation(myEditor, psiFile, progress, getState(myEditor), currentStamp)
     }
 
     override fun doApplyInformationToEditor() {
@@ -86,7 +86,8 @@ class VueIndentGuidePass(
         val descriptors: List<IndentGuideDescriptor>,
         val lineInfos: List<IndentLineInfo>,
         val scopeInfos: List<ScopeInfo>,
-        val tagHighlightInfos: List<TagHighlightInfo> = emptyList()
+        val tagHighlightInfos: List<TagHighlightInfo> = emptyList(),
+        val stamp: Long = -1L
     )
 
     companion object {
@@ -130,14 +131,15 @@ class VueIndentGuidePass(
             editor: EditorEx,
             psiFile: PsiFile,
             progress: ProgressIndicator? = null,
-            state: BetterBracketsState = getState(editor)
+            state: BetterBracketsState = getState(editor),
+            stamp: Long = nowStamp(editor)
         ): CollectResult {
             val isIndentEnabled = state.isVueEnabled && state.isVueIndentGuideEnabled
             val isScopeEnabled = state.isVueEnabled && state.isVueScopeEnabled
             val isTagTextEnabled = state.isVueEnabled && state.isHtmlTagTextEnabled
 
             if (!isIndentEnabled && !isScopeEnabled && !isTagTextEnabled) {
-                return CollectResult(emptyList(), emptyList(), emptyList(), emptyList())
+                return CollectResult(emptyList(), emptyList(), emptyList(), emptyList(), stamp)
             }
 
             val document = editor.document
@@ -308,18 +310,18 @@ class VueIndentGuidePass(
             tagHighlightInfos.sortWith { a, b -> compareRanges(a.range, b.range) }
             descriptors.sortBy { it.startLine }
 
-            return CollectResult(descriptors, lineInfos, scopeInfos, tagHighlightInfos)
+            return CollectResult(descriptors, lineInfos, scopeInfos, tagHighlightInfos, stamp)
         }
 
         fun applyInformationToEditor(
             editor: EditorEx,
             result: CollectResult
         ) {
-            val stamp = editor.getUserData(LAST_TIME_INDENTS_BUILT)
             val currentStamp = nowStamp(editor)
+            val stamp = editor.getUserData(LAST_TIME_INDENTS_BUILT)
 
-            if (stamp == currentStamp) return
-            editor.putUserData(LAST_TIME_INDENTS_BUILT, currentStamp)
+            if (stamp == currentStamp && stamp == result.stamp) return
+            editor.putUserData(LAST_TIME_INDENTS_BUILT, result.stamp)
 
             val oldHighlighters = editor.getUserData(INDENT_HIGHLIGHTERS_KEY)
             if (currentStamp == -1L) {
@@ -645,7 +647,7 @@ class VueIndentGuidePass(
             val lastRange = editor.getUserData(KEY_ACTIVE_SCOPE_RANGE)
             val newRange = activeScope?.range
 
-            if (newRange != lastRange) {
+            if (newRange != lastRange || oldHighlighter == null || !oldHighlighter.isValid) {
                 oldHighlighter?.dispose()
                 editor.putUserData(KEY_ACTIVE_SCOPE_RANGE, newRange)
 
@@ -662,6 +664,8 @@ class VueIndentGuidePass(
                         HighlighterTargetArea.EXACT_RANGE
                     )
                     editor.putUserData(KEY_ACTIVE_SCOPE_HIGHLIGHTER, newHighlighter)
+                } else {
+                    editor.putUserData(KEY_ACTIVE_SCOPE_HIGHLIGHTER, null)
                 }
             }
         }
