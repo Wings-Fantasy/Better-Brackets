@@ -36,8 +36,6 @@
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
-    <depends>org.jetbrains.plugins.yaml</depends>
-    <depends>com.intellij.modules.json</depends>
 
     <!-- 可选语言依赖：使插件在不同 IDE（CLion、WebStorm、PyCharm、IDEA 等）中均可无缝兼容安装运行 -->
     <depends optional="true" config-file="betterBrackets-java.xml">com.intellij.java</depends>
@@ -45,6 +43,8 @@
     <depends optional="true" config-file="betterBrackets-js.xml">JavaScript</depends>
     <depends optional="true" config-file="betterBrackets-css.xml">com.intellij.css</depends>
     <depends optional="true" config-file="betterBrackets-vue.xml">org.jetbrains.plugins.vue</depends>
+    <depends optional="true" config-file="betterBrackets-yaml.xml">org.jetbrains.plugins.yaml</depends>
+    <depends optional="true" config-file="betterBrackets-json.xml">com.intellij.modules.json</depends>
 
     <resource-bundle>messages.BetterBracketsBundle</resource-bundle>
 
@@ -54,12 +54,10 @@
                         dynamic="true"/>
     </extensionPoints>
 
-    <!-- 平台基础语言支持：C/C++、HTML/XML、YAML 与 JSON 在支持该模块的环境中可用 -->
+    <!-- 平台基础语言支持：C/C++ 与 HTML/XML 在所有 JetBrains IDE（包括 CLion、IDEA 等）中均原生可用 -->
     <extensions defaultExtensionNs="com.hxshijie.betterBrackets">
         <braceSupport implementation="com.hxshijie.betterBrackets.support.cpp.CppBraceSupport"/>
         <braceSupport implementation="com.hxshijie.betterBrackets.support.html.HtmlBraceSupport"/>
-        <braceSupport implementation="com.hxshijie.betterBrackets.support.yaml.YamlBraceSupport"/>
-        <braceSupport implementation="com.hxshijie.betterBrackets.support.json.JsonBraceSupport"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -88,8 +86,6 @@
 
         <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.cpp.CppIndentGuidePassFactory"/>
         <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.html.HtmlIndentGuidePassFactory"/>
-        <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.yaml.YamlIndentGuidePassFactory"/>
-        <highlightingPassFactory implementation="com.hxshijie.betterBrackets.support.json.JsonIndentGuidePassFactory"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
