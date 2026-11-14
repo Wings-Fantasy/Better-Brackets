@@ -17,7 +17,7 @@ import com.intellij.xml.util.XmlTagUtil
  */
 class HtmlBraceSupport : BracePairProvider {
 
-    override val languageId: String = "XML"
+    override val languageId: String = "HTML"
 
     override fun isSupported(file: PsiFile): Boolean = file is XmlFile && !VueBraceSupport.isVueFile(file)
 
