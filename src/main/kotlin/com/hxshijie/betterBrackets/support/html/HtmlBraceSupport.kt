@@ -30,7 +30,7 @@ class HtmlBraceSupport : BracePairProvider {
     override fun isEnabled(state: BetterBracketsState): Boolean = state.isHtmlEnabled
 
     override fun findBraceMatch(element: PsiElement, state: BetterBracketsState): BraceMatch? {
-        if (!state.isHtmlTagTextEnabled) return null
+        if (!isEnabled(state) || !state.isHtmlTagTextEnabled) return null
 
         val tag = element.parent as? XmlTag
             ?: element.parent?.parent as? XmlTag

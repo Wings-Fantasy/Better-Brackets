@@ -1,7 +1,6 @@
 package com.hxshijie.betterBrackets.support.js
 
 import com.hxshijie.betterBrackets.core.BetterBracketsFileUtil
-import com.hxshijie.betterBrackets.settings.BetterBracketsState
 import com.intellij.codeHighlighting.*
 import com.intellij.lang.javascript.psi.JSFile
 import com.intellij.openapi.editor.Editor
@@ -20,8 +19,6 @@ class JsIndentGuidePassFactory :
     override fun createHighlightingPass(file: PsiFile, editor: Editor): TextEditorHighlightingPass? {
         if (!BetterBracketsFileUtil.isHighlightingAllowed(file)) return null
         if (file !is JSFile) return null
-        val state = BetterBracketsState.instance
-        if (!state.isJsEnabled || (!state.isJsIndentGuideEnabled && !state.isJsScopeEnabled)) return null
         return JsIndentGuidePass(file.project, editor, file)
     }
 

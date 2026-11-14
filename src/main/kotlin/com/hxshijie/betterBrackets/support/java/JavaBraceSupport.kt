@@ -36,6 +36,7 @@ class JavaBraceSupport : BracePairProvider {
     override fun isEnabled(state: BetterBracketsState): Boolean = state.isJavaEnabled
 
     override fun findBraceMatch(element: PsiElement, state: BetterBracketsState): BraceMatch? {
+        if (!isEnabled(state)) return null
         if (element !is PsiJavaToken) return null
 
         val tokenType: IElementType = element.tokenType

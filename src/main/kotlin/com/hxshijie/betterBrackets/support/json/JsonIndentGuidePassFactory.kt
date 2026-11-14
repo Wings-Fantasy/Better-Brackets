@@ -1,7 +1,6 @@
 package com.hxshijie.betterBrackets.support.json
 
 import com.hxshijie.betterBrackets.core.BetterBracketsFileUtil
-import com.hxshijie.betterBrackets.settings.BetterBracketsState
 import com.intellij.codeHighlighting.*
 import com.intellij.json.psi.JsonFile
 import com.intellij.openapi.editor.Editor
@@ -20,8 +19,6 @@ class JsonIndentGuidePassFactory :
     override fun createHighlightingPass(file: PsiFile, editor: Editor): TextEditorHighlightingPass? {
         if (!BetterBracketsFileUtil.isHighlightingAllowed(file)) return null
         if (file !is JsonFile) return null
-        val state = BetterBracketsState.instance
-        if (!state.isJsonEnabled || (!state.isJsonIndentGuideEnabled && !state.isJsonScopeEnabled)) return null
         return JsonIndentGuidePass(file.project, editor, file)
     }
 

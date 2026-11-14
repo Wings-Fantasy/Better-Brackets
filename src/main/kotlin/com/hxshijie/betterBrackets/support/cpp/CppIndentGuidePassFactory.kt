@@ -1,7 +1,6 @@
 package com.hxshijie.betterBrackets.support.cpp
 
 import com.hxshijie.betterBrackets.core.BetterBracketsFileUtil
-import com.hxshijie.betterBrackets.settings.BetterBracketsState
 import com.intellij.codeHighlighting.*
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.DumbAware
@@ -20,8 +19,6 @@ class CppIndentGuidePassFactory :
         if (!BetterBracketsFileUtil.isHighlightingAllowed(file)) return null
         if (!CppSupportUtil.isCppSupportedEnvironment()) return null
         if (!CppBraceSupport.isCppFile(file)) return null
-        val state = BetterBracketsState.instance
-        if (!state.isCppEnabled || (!state.isCppIndentGuideEnabled && !state.isCppScopeEnabled)) return null
         return CppIndentGuidePass(file.project, editor, file)
     }
 
