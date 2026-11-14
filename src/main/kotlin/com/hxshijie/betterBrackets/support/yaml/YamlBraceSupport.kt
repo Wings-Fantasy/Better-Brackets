@@ -36,6 +36,8 @@ class YamlBraceSupport : BracePairProvider {
     override fun isEnabled(state: BetterBracketsState): Boolean = state.isYamlEnabled
 
     override fun findBraceMatch(element: PsiElement, state: BetterBracketsState): BraceMatch? {
+        if (!isEnabled(state)) return null
+
         val tokenType: IElementType = element.node?.elementType ?: return null
         val bracketType = getBracketType(tokenType) ?: return null
 

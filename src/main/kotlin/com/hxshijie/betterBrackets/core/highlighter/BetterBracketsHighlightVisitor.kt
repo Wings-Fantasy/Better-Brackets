@@ -20,8 +20,7 @@ class BetterBracketsHighlightVisitor : HighlightVisitor {
     private var activeProvider: BracePairProvider? = null
 
     private fun findProvider(file: PsiFile): BracePairProvider? {
-        val state = BetterBracketsState.instance
-        return BracePairProvider.braceSupportExtensionPoint.extensionList.firstOrNull { it.isEnabled(state) && it.isSupported(file) }
+        return BracePairProvider.braceSupportExtensionPoint.extensionList.firstOrNull { it.isSupported(file) }
     }
 
     override fun suitableForFile(file: PsiFile): Boolean {
@@ -35,8 +34,12 @@ class BetterBracketsHighlightVisitor : HighlightVisitor {
         holder: HighlightInfoHolder,
         action: Runnable
     ): Boolean {
-        this.holder = holder
-        this.activeProvider = findProvider(file)
+        val provider = findProvider(file)
+        val state = BetterBracketsState.instance
+        if (provider != null && provider.isEnabled(state)) {
+            this.holder = holder
+            this.activeProvider = provider
+        }
         try {
             action.run()
         } finally {

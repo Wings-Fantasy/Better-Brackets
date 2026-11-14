@@ -1,7 +1,6 @@
 package com.hxshijie.betterBrackets.support.vue
 
 import com.hxshijie.betterBrackets.core.BetterBracketsFileUtil
-import com.hxshijie.betterBrackets.settings.BetterBracketsState
 import com.intellij.codeHighlighting.*
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.DumbAware
@@ -19,8 +18,6 @@ class VueIndentGuidePassFactory :
     override fun createHighlightingPass(file: PsiFile, editor: Editor): TextEditorHighlightingPass? {
         if (!BetterBracketsFileUtil.isHighlightingAllowed(file)) return null
         if (!VueBraceSupport.isVueFile(file)) return null
-        val state = BetterBracketsState.instance
-        if (!state.isVueEnabled || (!state.isVueIndentGuideEnabled && !state.isVueScopeEnabled)) return null
         return VueIndentGuidePass(file.project, editor, file)
     }
 

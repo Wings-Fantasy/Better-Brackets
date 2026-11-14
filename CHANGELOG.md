@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## 0.2.1
+### Fixed
+- **语言总开关即时刷新生效 (Language Master Switch Live Refresh)**
+  - 修复在设置中关闭某一个语言的总开关后，已打开的编辑器中彩色括号、垂直缩进线及作用域高亮未能立即清除、必须关闭并重新打开文件才生效的问题；现在修改设置后，所有已打开的文件均会即时响应并刷新。
+- **HTML / XML 语言设置项缺失修复 (HTML / XML Settings Item Missing)**
+  - 修复在插件设置界面的语言列表中，HTML / XML 配置项未能正常显示出来的问题。
+
 ## 0.2.0
 ### Added
 - **JSON 语言深度支持 (JSON Language Support)**

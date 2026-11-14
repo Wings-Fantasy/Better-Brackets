@@ -1,7 +1,6 @@
 package com.hxshijie.betterBrackets.support.kotlin
 
 import com.hxshijie.betterBrackets.core.BetterBracketsFileUtil
-import com.hxshijie.betterBrackets.settings.BetterBracketsState
 import com.intellij.codeHighlighting.*
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.DumbAware
@@ -20,8 +19,6 @@ class KotlinIndentGuidePassFactory :
     override fun createHighlightingPass(file: PsiFile, editor: Editor): TextEditorHighlightingPass? {
         if (!BetterBracketsFileUtil.isHighlightingAllowed(file)) return null
         if (file !is KtFile) return null
-        val state = BetterBracketsState.instance
-        if (!state.isKotlinEnabled || (!state.isKotlinIndentGuideEnabled && !state.isKotlinScopeEnabled)) return null
         return KotlinIndentGuidePass(file.project, editor, file)
     }
 

@@ -34,6 +34,8 @@ class VueBraceSupport : BracePairProvider {
     override fun isEnabled(state: BetterBracketsState): Boolean = state.isVueEnabled
 
     override fun findBraceMatch(element: PsiElement, state: BetterBracketsState): BraceMatch? {
+        if (!isEnabled(state)) return null
+
         if (isInterpolationToken(element)) {
             if (!state.isVueInterpolationEnabled) return null
             val color = state.vueInterpolationColor.ifBlank { "#B4960A" }
